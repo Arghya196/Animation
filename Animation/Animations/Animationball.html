@@ -39,8 +39,8 @@
     
     <script>
         window.onload =function(){
-            const canvas=document.getElemnetByID('mycanvas');
-            const ctx=canvas.getcontext('2d');
+            const canvas=document.getElementById('mycanvas');
+            const ctx=canvas.getContext('2d');
             let x=canvas.width/2;
             let y= canvas.height/2;
             let dx=2;
@@ -49,11 +49,12 @@
             let growing=true;
             const minradius=5;
             const maxradius=30;
+            const ballColor = '#0095DD';
 
             function draw(){
                 ctx.beginPath();
                 ctx.arc(x,y, radius, 0, Math.PI * 2);
-                ctx.fillStyle ='#0095DD';
+                ctx.fillStyle = ballColor;
                 ctx.fill();
                 ctx.closePath();
 
@@ -61,21 +62,30 @@
             function update(){
                 ctx.clearRect(0,0, canvas.width, canvas.height);
                 if(growing){
-                    radius+=1;
+                    radius+=0.5;
                     if(radius>=maxradius){
                         growing=false;
                     }
+                }
                     else {
-                    radius-=1;
+                    radius-=0.5;
                     if (radius <= minradius) {
                         growing = true;
                     }
-
-                draw();    
-
                 }
 
+                draw();  
+                if(x+dx>canvas.width-radius || x + dx < radius){
+                    dx=-dx;
+                }
+                if (y + dy > canvas.height - radius || y + dy < radius) {
+                    dy = -dy;
+                }
+                x += dx;
+                y += dy;
+                requestAnimationFrame(update);
             }
+            update();
         }
     </script>
 </body>
