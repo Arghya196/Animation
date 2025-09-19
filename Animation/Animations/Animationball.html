@@ -44,17 +44,23 @@
             let x=canvas.width/2;
             let y= canvas.height/2;
             let dx=2;
-            let dy=2;
+            let dy=-2;
             let radius=5;
             let growing=true;
             const minradius=5;
             const maxradius=10;
-            const ballColor = '#0095DD';
 
             function draw(){
                 ctx.beginPath();
                 ctx.arc(x,y, ballRadius, 0, Math.PI * 2);
-                
+                ctx.fillStyle ='#0095DD';
+                ctx.fill();
+                ctx.closePath();
+
+            }
+            function update(){
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+
             }
         }
     </script>
