@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball Animation</title>
+    <style>
+        body{
+            background-color: #36454F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin:0;
+            font-family: 'Times New Roman', Times, serif;
+            user-select:none;
+        }
+
+        h1{ 
+            text-align: center;
+            margin-bottom: 50px;
+            color:#a6c8db;
+        }
+
+        canvas {
+            border: 3px solid #000405;
+            background-color: aliceblue;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px #36454F;
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>BOUNCING BALL</h1>
+        <canvas id="mycanvas" width="500" height="300"></canvas>
+    </div>
+    
+    <script>
+        window.onload =function(){
+            const canvas=document.getElementById('mycanvas');
+            const ctx=canvas.getContext('2d');
+            let x=canvas.width/2;
+            let y= canvas.height/2;
+            let dx=2;
+            let dy=-2;
+            let radius=5;
+            let growing=true;
+            const minradius=5;
+            const maxradius=30;
+            const ballColor = '#0095DD';
+
+            function draw(){
+                ctx.beginPath();
+                ctx.arc(x,y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = ballColor;
+                ctx.fill();
+                ctx.closePath();
+
+            }
+            function update(){
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+                if(growing){
+                    radius+=0.5;
+                    if(radius>=maxradius){
+                        growing=false;
+                    }
+                }
+                    else {
+                    radius-=0.5;
+                    if (radius <= minradius) {
+                        growing = true;
+                    }
+                }
+
+                draw();  
+                if(x+dx>canvas.width-radius || x + dx < radius){
+                    dx=-dx;
+                }
+                if (y + dy > canvas.height - radius || y + dy < radius) {
+                    dy = -dy;
+                }
+                x += dx;
+                y += dy;
+                  requestAnimationFrame(update);
+            }
+            update();
+        }
+    </script>
+</body>
+</html>
